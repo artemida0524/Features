@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
-public class ObjectPools<TSource> where TSource : MonoBehaviour
+public class ObjectPools<TSource> where TSource : PooledObject
 {
     public List<IObjectPool<TSource>> Source { get; private set; }
 

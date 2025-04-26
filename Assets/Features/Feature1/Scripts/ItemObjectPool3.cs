@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemObjectPool3Pooled))]
 public class ItemObjectPool3 : ItemObjectPoolBase
 {
     private void Start()

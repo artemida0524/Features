@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class ObjectPool<TSource> : IObjectPool<TSource> where TSource : MonoBehaviour
+public class ObjectPool<TSource> : IObjectPool<TSource> where TSource : PooledObject
 {
     public TSource BaseInstance { get; private set; }
     private List<TSource> _list;
@@ -26,6 +26,8 @@ public class ObjectPool<TSource> : IObjectPool<TSource> where TSource : MonoBeha
     {
         TSource newInstance = Object.Instantiate(BaseInstance);
         _list.Add(newInstance);
+
+        newInstance.Init(this);
 
         newInstance.gameObject.SetActive(isActive);
 
@@ -69,5 +71,10 @@ public class ObjectPool<TSource> : IObjectPool<TSource> where TSource : MonoBeha
     IEnumerator IEnumerable.GetEnumerator()
     {
         return _list.GetEnumerator();
+    }
+
+    public void ReturnToPool(PooledObject pooledObject)
+    {
+        pooledObject.gameObject.SetActive(false);
     }
 }

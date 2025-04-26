@@ -2,7 +2,7 @@ using System;
 using TMPro.EditorUtilities;
 using UnityEngine;
 
-public class PooledFactory<TSource> : IFactory<TSource> where TSource : MonoBehaviour
+public class PooledFactory<TSource> : IFactory<TSource> where TSource : PooledObject
 {
     private ObjectPools<TSource> _pool;
 

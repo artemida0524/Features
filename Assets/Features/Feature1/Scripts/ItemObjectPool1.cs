@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemObjectPool1Pooled))]
 public class ItemObjectPool1 : ItemObjectPoolBase
 {
+
     private void Start()
     {
-        
+
     }
 
 
