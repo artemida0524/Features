@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ObjectPool<TSource> : IObjectPool<TSource> where TSource : PooledObject
 {
+
     public TSource BaseInstance { get; private set; }
     private List<TSource> _list;
 
