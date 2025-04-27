@@ -1,44 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class TestObjectPool : MonoBehaviour
 {
     [SerializeField] private ItemObjectPool1 instance1;
     [SerializeField] private ItemObjectPool2 instance2;
     [SerializeField] private ItemObjectPool3 instance3;
+    
+    private IObjectPool<IPooledObject> _pool1;
+    private IObjectPool<IPooledObject> _pool2;
+    private IObjectPool<IPooledObject> _pool3;
 
-    private IObjectPool<PooledObject> _pool1;
-    private IObjectPool<PooledObject> _pool2;
-    private IObjectPool<PooledObject> _pool3;
-
-    private IFactory<PooledObject> _factory;
-    private ObjectPools<PooledObject> _source;
+    private IFactory<IPooledObject> _factory;
+    private ObjectPools<IPooledObject> _source;
 
     private void Start()
     {
-        _pool1 = new ObjectPool<PooledObject>(instance1.PooledObject, 1);
-        _pool2 = new ObjectPool<PooledObject>(instance2.PooledObject, 1);
-        _pool3 = new ObjectPool<PooledObject>(instance3.PooledObject, 1);
+        _pool1 = new ObjectPool<ItemObjectPool1>(instance1, 1);
+        _pool2 = new ObjectPool<ItemObjectPool2>(instance2, 1);
+        _pool3 = new ObjectPool<ItemObjectPool3>(instance3, 1);
 
-        List<IObjectPool<PooledObject>> pools = new List<IObjectPool<PooledObject>>()
+        List<IObjectPool<IPooledObject>> pools = new List<IObjectPool<IPooledObject>>()
         {
             _pool1,
             _pool2,
             _pool3
         };
 
-        _source = new ObjectPools<PooledObject>(pools);
+        _source = new ObjectPools<IPooledObject>(pools);
 
-        _factory = new PooledFactory<PooledObject>(_source);
+        //_factory = new PooledFactory<IPooledObject>(_source);
+
+        //_factory = new FactoryTest<ItemObjectPoolBase>(new List<ItemObjectPoolBase>()
+        //{
+        //    instance1,
+        //    instance2,
+        //    instance3,
+        //});
     }
 
-    private Queue<PooledObject> _queue = new();
+    private Queue<IPooledObject> _queue = new();
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            _queue.Enqueue(_factory.Get<ItemObjectPool1Pooled>(true));
+            _queue.Enqueue(_factory.Get<ItemObjectPool2>(true));
         }
 
         if (Input.GetKeyDown(KeyCode.B))

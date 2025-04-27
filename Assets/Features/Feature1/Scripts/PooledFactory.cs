@@ -1,8 +1,9 @@
 using System;
+using System.Runtime.Serialization;
 using TMPro.EditorUtilities;
 using UnityEngine;
 
-public class PooledFactory<TSource> : IFactory<TSource> where TSource : PooledObject
+public class PooledFactory<TSource> : IFactory<TSource> where TSource : IPooledObject
 {
     private ObjectPools<TSource> _pool;
 

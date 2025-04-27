@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class ObjectPools<TSource> where TSource : PooledObject
+public class ObjectPools<TSource> where TSource : IPooledObject
 {
     public List<IObjectPool<TSource>> Source { get; private set; }
 
@@ -18,7 +18,7 @@ public class ObjectPools<TSource> where TSource : PooledObject
                 return (T)pool.Get(isActive);
             }
         }
-        return null;
+        return default;
     }
 }
 

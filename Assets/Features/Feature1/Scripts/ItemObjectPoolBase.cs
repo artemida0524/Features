@@ -1,23 +1,17 @@
 ﻿using UnityEngine;
 
-public abstract class ItemObjectPoolBase : MonoBehaviour
+public abstract class ItemObjectPoolBase : MonoBehaviour, IPooledObject
 {
 
-    protected PooledObject _pooledObject;
+    public IObjectPool<IPooledObject> Pool { get; protected set; }
 
-    public virtual PooledObject PooledObject
+    public virtual void Init(IObjectPool<IPooledObject> pool)
     {
-        get
-        {
-            if (_pooledObject == null)
-            {
-                _pooledObject = GetComponent<PooledObject>();
-            }
-
-            return _pooledObject;
-        }
+        Pool = pool;
     }
 
-
-    public abstract void Disable();
+    public virtual void BackToPool()
+    {
+        Pool.ReturnToPool(this);
+    }
 }
